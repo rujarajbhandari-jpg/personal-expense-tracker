@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Expense History - Personal Expense Tracker</title>
+  </head>
+  <body>
+    <h1>Expense History</h1>
+
+    <!-- Navigation -->
+    <nav>
+      <a href="{{ url_for('main.dashboard') }}">Dashboard</a> |
+      <a href="{{ url_for('main.add_expense') }}">Add Expense</a> |
+      <a href="{{ url_for('main.view_history') }}">View History</a> |
+      <a href="{{ url_for('main.logout') }}">Logout</a>
+
+    </nav>
+
+    <hr>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if expenses %}
+      <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for exp in expenses %}
+            <tr>
+              <td>{{ exp['expense_date'] }}</td>
+              <td>{{ exp['category_name'] }}</td>
+              <td>{{ "%.2f"|format(exp['amount']) }}</td>
+              <td>{{ exp['description'] or "" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No expenses recorded yet.</p>
+    {% endif %}
+
+    <p>
+      <a href="{{ url_for('main.dashboard') }}">Back to Dashboard</a>
+    </p>
+  </body>
+</html>

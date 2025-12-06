@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login - Personal Expense Tracker</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+
+    <!-- Show flash messages (errors/success) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('main.login') }}">
+      <div>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account?
+      <a href="{{ url_for('main.register') }}">Register here</a>
+    </p>
+  </body>
+</html>
